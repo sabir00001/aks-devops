@@ -63,8 +63,11 @@ stages:
                     backendType: 'azurerm'
                     backendServiceArm: 'azure-rg-connection'
                     backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+                    ensureBackend: true
                     backendAzureRmResourceGroupName: 'DevOps'
+                    backendAzureRmResourceGroupLocation: 'eastus'
                     backendAzureRmStorageAccountName: 'devopsdiag621'
+                    backendAzureRmStorageAccountSku: 
                     backendAzureRmContainerName: 'aks-tfstatefile'
                     backendAzureRmKey: '$(environment)-terraform.tfstate'
                     allowTelemetryCollection: false
