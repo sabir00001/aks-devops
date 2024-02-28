@@ -18,7 +18,7 @@ stages:
         - task: PublishPipelineArtifact@1
           displayName: Publish-Artifact
           inputs:
-            targetPath: '$(Pipeline.Workspace)/aks-terraform'
+            targetPath: '$(System.DefaultWorkingDirectory)/aks-terraform'
             artifact: 'aks-terraform-artifacts'
             publishLocation: 'pipeline'
         - task: TerraformCLI@2
