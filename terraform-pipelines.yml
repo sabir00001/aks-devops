@@ -9,6 +9,8 @@ name: devops-agent-01
 
 stages:
   - stage: TerraformValidate
+    pool:
+     name: devops-agent-01
     jobs:
       - job: TerraformValidate
         continueOnError: false
