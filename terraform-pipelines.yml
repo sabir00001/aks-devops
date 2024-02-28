@@ -1,8 +1,86 @@
 trigger:
 - master
-
+#Define variables 
+variables:
+- name: environment
+  value: prod
 pool:
   vmImage: ubuntu-latest
 
+# AGENT VM IMAGE
+name: devops-agent-01
+
 stages:
-  - stage: 
+  - stage: TerraformValidate
+    pool:
+     name: devops-agent-01
+    jobs:
+      - job: TerraformValidate
+        continueOnError: false
+        steps:
+        - task: PublishPipelineArtifact@1
+          displayName: Publish-Artifact
+          inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)/aks-terraform'
+            artifact: 'aks-terraform-artifacts'
+            publishLocation: 'pipeline'
+        - task: TerraformCLI@2
+          displayName: Terraform-init
+          inputs:
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
+            backendType: 'azurerm'
+            backendServiceArm: 'azure-rg-connection'
+            backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+            backendAzureRmResourceGroupName: 'DevOps'
+            backendAzureRmStorageAccountName: 'devopsdiag621'
+            backendAzureRmContainerName: 'aks-tfstatefile'
+            backendAzureRmKey: 'terraform-test.tfstate'
+            allowTelemetryCollection: false
+        - task: TerraformCLI@2
+          inputs:
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
+            allowTelemetryCollection: false
+        
+  - stage: DeployAKSCluster
+    jobs:
+      - deployment: DeployAKSCluster
+        displayName: DeployAKSCluster
+        continueOnError: false
+        pool:
+          name: devops-agent-01
+        environment: $(environment)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: TerraformCLI@2
+                  displayName: Terraform-init
+                  inputs:
+                    command: 'init'
+                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    backendType: 'azurerm'
+                    backendServiceArm: 'azure-rg-connection'
+                    backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+                    backendAzureRmResourceGroupName: 'DevOps'
+                    backendAzureRmStorageAccountName: 'devopsdiag621'
+                    backendAzureRmContainerName: 'aks-tfstatefile'
+                    backendAzureRmKey: '$(environment)-terraform.tfstate'
+                    allowTelemetryCollection: false
+                - task: TerraformCLI@2
+                  displayName: Terraform-plan
+                  inputs:
+                    command: 'plan'
+                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    allowTelemetryCollection: false
+                    publishPlanResults: '$(environment)-result'
+                - task: TerraformCLI@2
+                  displayName: Terraform-apply
+                  inputs:
+                    command: 'apply'
+                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    allowTelemetryCollection: false
+                      
+                        
+                
