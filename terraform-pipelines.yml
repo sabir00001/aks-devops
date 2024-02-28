@@ -18,5 +18,17 @@ stages:
             targetPath: '$(Pipeline.Workspace)/aks-terraform'
             artifact: 'aks-terraform-artifacts'
             publishLocation: 'pipeline'
-
+        - task: TerraformCLI@2
+          inputs:
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)aks-terraform'
+            backendType: 'azurerm'
+            backendServiceArm: 'azure-rg-connection'
+            backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+            backendAzureRmResourceGroupName: 'DevOps'
+            backendAzureRmStorageAccountName: 'devopsdiag621'
+            backendAzureRmContainerName: 'aks-tfstatefile'
+            backendAzureRmKey: 'terraform.tfstate'
+            allowTelemetryCollection: true
+        
           
