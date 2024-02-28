@@ -59,7 +59,7 @@ stages:
                   displayName: Terraform-init
                   inputs:
                     command: 'init'
-                    workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
+                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
                     backendType: 'azurerm'
                     backendServiceArm: 'azure-rg-connection'
                     backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
@@ -67,6 +67,12 @@ stages:
                     backendAzureRmStorageAccountName: 'devopsdiag621'
                     backendAzureRmContainerName: 'aks-tfstatefile'
                     backendAzureRmKey: '$(environment)-terraform.tfstate'
+                    allowTelemetryCollection: false
+                - task: TerraformCLI@2
+                  displayName: plan
+                  inputs:
+                    command: 'plan'
+                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
                     allowTelemetryCollection: false
                       
                         
