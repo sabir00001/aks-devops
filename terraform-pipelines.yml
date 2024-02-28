@@ -30,7 +30,7 @@ stages:
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
             backendType: 'azurerm'
-            backendServiceArm: 'azure-rg-connection'
+            backendServiceArm: 'sabir-choudhury(410c1a95-68f7-4b30-9fdc-964a1658482d)'
             backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
             backendAzureRmResourceGroupName: 'DevOps'
             backendAzureRmStorageAccountName: 'devopsdiag621'
