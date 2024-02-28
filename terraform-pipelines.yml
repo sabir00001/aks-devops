@@ -10,7 +10,7 @@ name: devops-agent-01
 stages:
   - stage: TerraformValidate
     jobs:
-      - job: Terraform-Validate
+      - job: TerraformValidate
         continueOnError: false
         steps:
         - task: PublishPipelineArtifact@1
