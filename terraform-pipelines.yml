@@ -69,11 +69,13 @@ stages:
                     backendAzureRmKey: '$(environment)-terraform.tfstate'
                     allowTelemetryCollection: false
                 - task: TerraformCLI@2
-                  displayName: plan
+                  displayName: Terraform-plan
                   inputs:
                     command: 'plan'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    commandOptions: '-out/$(environment)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
+                    publishPlanResults: '$(environment)-result'
                       
                         
                 
