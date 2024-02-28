@@ -73,15 +73,13 @@ stages:
                   inputs:
                     command: 'plan'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    commandOptions: '$(Pipeline.Workspace)/aks-terraform-artifacts/$(environment)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
-                    publishPlanResults: '$(environment)-result'    
+                    publishPlanResults: '$(environment)-result'
                 - task: TerraformCLI@2
                   displayName: Terraform-apply
                   inputs:
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    commandOptions: '$(Pipeline.Workspace)/aks-terraform-artifacts/$(environment)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
                       
                         
