@@ -40,6 +40,7 @@ variable "username" {
 variable "environment" {
   type        = string
   description = "Environment name"
+  default = "prod"
 
 }
 
