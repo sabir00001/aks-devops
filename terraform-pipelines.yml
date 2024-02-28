@@ -4,5 +4,19 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+# AGENT VM IMAGE
+name: devops-agent-01
+
 stages:
-  - stage: 
+  - stage: TerraformValidate
+    jobs:
+      - job: Terraform-Validate
+        continueOnError: false
+        steps:
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: '$(Pipeline.Workspace)/aks-terraform'
+            artifact: 'aks-terraform-artifacts'
+            publishLocation: 'pipeline'
+
+          
