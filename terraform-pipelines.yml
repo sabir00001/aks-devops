@@ -36,7 +36,7 @@ stages:
             backendAzureRmResourceGroupName: 'DevOps'
             backendAzureRmStorageAccountName: 'devopsdiag621'
             backendAzureRmContainerName: 'aks-tfstatefile'
-            backendAzureRmKey: 'terraform-test.tfstate'
+            backendAzureRmKey: 'terraform.tfstate'
             allowTelemetryCollection: false
         - task: TerraformCLI@2
           inputs:
