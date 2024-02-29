@@ -88,7 +88,6 @@ stages:
                   inputs:
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    commandOptions: '-auto-approve'
                     allowTelemetryCollection: false
                       
                         
