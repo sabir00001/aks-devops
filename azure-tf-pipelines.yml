@@ -92,21 +92,29 @@ stages:
                     environmentServiceName: 'azure-learn'
                     providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
                     allowTelemetryCollection: false
-                      
-  - stage: DestroyAks
+
+  - stage: approveDestroyAks
     jobs:
-    - job: 
+      - job: approveDestroyAks
+        displayName: approve to derstoy tf
+        pool: server
+        steps:   
+        - task: ManualValidation@0
+          timeoutInMinutes: 30 # task times out in 1 day
+          inputs:
+              notifyUsers: |
+                  someone@example.com
+              instructions: 'Please validate the build configuration and resume'
+              onTimeout: 'reject'
+                      
+  - stage: DestroyAKSCluster
+    jobs:
+    - job: DestroyAKSCluster
       displayName: DestroyAKSCluster
       continueOnError: false
       pool:
         name: devops-agent-01
-        environment: $(environment)
-        steps:
-          - task: ManualIntervention@8
-            timeoutInMinutes: 30
-            inputs:
-              instructions: 'approve to destroy the cluster'
-              onTimeout: reject  
+      steps:
           - task: TerraformCLI@2
             inputs:
               command: 'destroy'
