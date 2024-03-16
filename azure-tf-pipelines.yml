@@ -115,6 +115,20 @@ stages:
       pool:
         name: devops-agent-01
       steps:
+
+      - task: TerraformCLI@2
+        displayName: Terraform-init
+        inputs:
+          command: 'init'
+          workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+          backendType: 'azurerm'
+          backendServiceArm: 'azure-learn'
+          backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+          backendAzureRmResourceGroupName: 'aks-rg-acr'
+          backendAzureRmStorageAccountName: 'maftfbackend'
+          backendAzureRmContainerName: 'prod-tfstatefile'
+          backendAzureRmKey: 'terraform-prod.tfstate'
+          allowTelemetryCollection: false
       - task: TerraformCLI@2
         displayName: Terraform-plan
         inputs:
