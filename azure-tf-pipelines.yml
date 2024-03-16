@@ -30,12 +30,12 @@ stages:
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
             backendType: 'azurerm'
-            backendServiceArm: 'sabir-choudhury(410c1a95-68f7-4b30-9fdc-964a1658482d)'
-            backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+            backendServiceArm: 'azure-learn'
+            backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
             backendAzureRmResourceGroupName: 'DevOps'
-            backendAzureRmStorageAccountName: 'devopsdiag621'
-            backendAzureRmContainerName: 'aks-tfstatefile'
-            backendAzureRmKey: 'terraform-test.tfstate'
+            backendAzureRmStorageAccountName: 'maftfbackend'
+            backendAzureRmContainerName: 'prod-tfstatefile'
+            backendAzureRmKey: 'terraform-prod.tfstate'
             allowTelemetryCollection: false
         - task: TerraformCLI@2
           inputs:
@@ -67,13 +67,12 @@ stages:
                   inputs:
                     command: 'init'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    backendType: 'azurerm'
-                    backendServiceArm: 'sabir-choudhury(410c1a95-68f7-4b30-9fdc-964a1658482d)'
-                    backendAzureRmSubscriptionId: '410c1a95-68f7-4b30-9fdc-964a1658482d'
+                    backendServiceArm: 'azure-learn'
+                    backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
                     backendAzureRmResourceGroupName: 'DevOps'
-                    backendAzureRmStorageAccountName: 'devopsdiag621'
-                    backendAzureRmContainerName: 'aks-tfstatefile'
-                    backendAzureRmKey: '$(environment)-terraform.tfstate'
+                    backendAzureRmStorageAccountName: 'maftfbackend'
+                    backendAzureRmContainerName: 'prod-tfstatefile'
+                    backendAzureRmKey: 'terraform-prod.tfstate'
                     allowTelemetryCollection: false
                 - task: TerraformCLI@2
                   displayName: Terraform-plan
@@ -88,6 +87,8 @@ stages:
                   inputs:
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    environmentServiceName: 'azure-learn'
+                    providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
                     allowTelemetryCollection: false
                       
                         
