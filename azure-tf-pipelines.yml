@@ -55,7 +55,6 @@ stages:
           runOnce:
             deploy:
               steps:
-            
                 - task: DownloadSecureFile@1
                   displayName: Dwonload-SSHKEY
                   name: sshkey
@@ -102,21 +101,18 @@ stages:
       pool:
         name: devops-agent-01
         environment: $(environment)
-        strategy:
-          runOnce:
-           deploy:
-             steps:
-              - task: ManualIntervention@8
-                timeoutInMinutes: 30
-                inputs:
-                  instructions: 'approve to destroy the cluster'
-                  onTimeout: reject  
-              - task: TerraformCLI@2
-                inputs:
-                  command: 'destroy'
-                  environmentServiceName: 'azure-learn'
-                  providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-                  allowTelemetryCollection: true
+        steps:
+          - task: ManualIntervention@8
+            timeoutInMinutes: 30
+            inputs:
+              instructions: 'approve to destroy the cluster'
+              onTimeout: reject  
+          - task: TerraformCLI@2
+            inputs:
+              command: 'destroy'
+              environmentServiceName: 'azure-learn'
+              providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+              allowTelemetryCollection: true
             
            
       
