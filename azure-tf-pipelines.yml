@@ -32,7 +32,7 @@ stages:
             backendType: 'azurerm'
             backendServiceArm: 'azure-learn'
             backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-            backendAzureRmResourceGroupName: 'DevOps'
+            backendAzureRmResourceGroupName: 'aks-rg-acr'
             backendAzureRmStorageAccountName: 'maftfbackend'
             backendAzureRmContainerName: 'prod-tfstatefile'
             backendAzureRmKey: 'terraform-prod.tfstate'
@@ -67,9 +67,10 @@ stages:
                   inputs:
                     command: 'init'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    backendType: 'azurerm'
                     backendServiceArm: 'azure-learn'
                     backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-                    backendAzureRmResourceGroupName: 'DevOps'
+                    backendAzureRmResourceGroupName: 'aks-rg-acr'
                     backendAzureRmStorageAccountName: 'maftfbackend'
                     backendAzureRmContainerName: 'prod-tfstatefile'
                     backendAzureRmKey: 'terraform-prod.tfstate'
@@ -79,6 +80,8 @@ stages:
                   inputs:
                     command: 'plan'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    environmentServiceName: 'azure-learn'
+                    providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
                     commandOptions: '-var environment=$(environment)'
                     allowTelemetryCollection: false
                     publishPlanResults: '$(environment)-result'
