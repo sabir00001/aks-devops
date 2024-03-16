@@ -115,12 +115,23 @@ stages:
       pool:
         name: devops-agent-01
       steps:
-          - task: TerraformCLI@2
-            inputs:
-              command: 'destroy'
-              environmentServiceName: 'azure-learn'
-              providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-              allowTelemetryCollection: true
+      - task: TerraformCLI@2
+        displayName: Terraform-plan
+        inputs:
+          command: 'plan'
+          workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+          environmentServiceName: 'azure-learn'
+          providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+          commandOptions: '-var environment=$(environment)'
+          allowTelemetryCollection: false
+          publishPlanResults: '$(environment)-result'
+
+      - task: TerraformCLI@2
+        inputs:
+          command: 'destroy'
+          environmentServiceName: 'azure-learn'
+          providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+          allowTelemetryCollection: true
             
            
       
