@@ -1,8 +1,8 @@
-/*
+
 resource "azurerm_kubernetes_cluster_node_pool" "aks_user_node" {
   name                  = "userpool"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-  vm_size               = "Standard_DS2_v2"
+  vm_size               = "D2s_v3"
   max_count             = 2
   min_count             = 1
   mode                  = "User"
@@ -24,4 +24,3 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_user_node" {
     "nodepoolos"    = "linux"
   }
 }
-*/
