@@ -8,12 +8,12 @@ pool:
   vmImage: ubuntu-latest
 
 # AGENT VM IMAGE
-name: devops-agent-01
+#name: devops-agent-01
 
 stages:
   - stage: TerraformValidate
-    pool:
-     name: devops-agent-01
+    #pool:
+     #name: devops-agent-01
     jobs:
       - job: TerraformValidate
         continueOnError: false
@@ -48,8 +48,9 @@ stages:
       - deployment: DeployAKSCluster
         displayName: DeployAKSCluster
         continueOnError: false
-        pool:
-          name: devops-agent-01
+        #pool:
+          #name: devops-agent-01
+      
         environment: $(environment)
         strategy:
           runOnce:
@@ -112,8 +113,8 @@ stages:
     - job: DestroyAKSCluster
       displayName: DestroyAKSCluster
       continueOnError: false
-      pool:
-        name: devops-agent-01
+     # pool:
+       # name: devops-agent-01
       steps:
 
       - task: TerraformCLI@2
