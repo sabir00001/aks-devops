@@ -30,10 +30,11 @@ stages:
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
             backendType: 'azurerm'
-            backendServiceArm: 'azure-learn'
-            backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-            backendAzureRmResourceGroupName: 'aks-rg-acr'
-            backendAzureRmStorageAccountName: 'maftfbackend'
+            backendServiceArm: 'azure-practice'
+            backendAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
+            ensureBackend: true
+            backendAzureRmResourceGroupName: 'rg-sabir-acr'
+            backendAzureRmStorageAccountName: 'stgsabirerraform'
             backendAzureRmContainerName: 'prod-tfstatefile'
             backendAzureRmKey: 'terraform-prod.tfstate'
             allowTelemetryCollection: false
@@ -66,12 +67,13 @@ stages:
                   displayName: Terraform-init
                   inputs:
                     command: 'init'
-                    workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
+                    workingDirectory: '$(System.DefaultWorkingDirectory)/aks-terraform'
                     backendType: 'azurerm'
-                    backendServiceArm: 'azure-learn'
-                    backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-                    backendAzureRmResourceGroupName: 'aks-rg-acr'
-                    backendAzureRmStorageAccountName: 'maftfbackend'
+                    backendServiceArm: 'azure-practice'
+                    backendAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
+                    ensureBackend: true
+                    backendAzureRmResourceGroupName: 'rg-sabir-acr'
+                    backendAzureRmStorageAccountName: 'stgsabirerraform'
                     backendAzureRmContainerName: 'prod-tfstatefile'
                     backendAzureRmKey: 'terraform-prod.tfstate'
                     allowTelemetryCollection: false
@@ -80,8 +82,8 @@ stages:
                   inputs:
                     command: 'plan'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    environmentServiceName: 'azure-learn'
-                    providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+                    environmentServiceName: 'azure-practice'
+                    providerAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
                     commandOptions: '-var environment=$(environment)'
                     allowTelemetryCollection: false
                     publishPlanResults: '$(environment)-result'
@@ -90,8 +92,8 @@ stages:
                   inputs:
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-                    environmentServiceName: 'azure-learn'
-                    providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+                    environmentServiceName: 'azure-practice'
+                    providerAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
                     allowTelemetryCollection: false
 
   - stage: approveDestroyAks
@@ -123,10 +125,10 @@ stages:
           command: 'init'
           workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
           backendType: 'azurerm'
-          backendServiceArm: 'azure-learn'
-          backendAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
-          backendAzureRmResourceGroupName: 'aks-rg-acr'
-          backendAzureRmStorageAccountName: 'maftfbackend'
+          backendServiceArm: 'azure-practice'
+          backendAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
+          backendAzureRmResourceGroupName: 'rg-sabir-acr'
+          backendAzureRmStorageAccountName: 'stgsabirerraform'
           backendAzureRmContainerName: 'prod-tfstatefile'
           backendAzureRmKey: 'terraform-prod.tfstate'
           allowTelemetryCollection: false
@@ -135,8 +137,8 @@ stages:
         inputs:
           command: 'plan'
           workingDirectory: '$(Pipeline.Workspace)/aks-terraform-artifacts'
-          environmentServiceName: 'azure-learn'
-          providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+          environmentServiceName: 'azure-practice'
+          providerAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
           commandOptions: '-var environment=$(environment)'
           allowTelemetryCollection: false
           publishPlanResults: '$(environment)-result'
@@ -144,8 +146,8 @@ stages:
       - task: TerraformCLI@2
         inputs:
           command: 'destroy'
-          environmentServiceName: 'azure-learn'
-          providerAzureRmSubscriptionId: '9734dba5-b9e0-4249-9973-b3fb22b06d24'
+          environmentServiceName: 'azure-practice'
+          providerAzureRmSubscriptionId: 'a45d12c7-47d5-4728-b6eb-7f21d3deef39'
           allowTelemetryCollection: true
             
            
